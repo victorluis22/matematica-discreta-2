@@ -65,7 +65,6 @@ class Grafo {
 
     while (fila.length > 0) {
       const noAtual = fila.shift();
-      console.log(noAtual);
       for (const aresta of this.arestas) {
         if (
           aresta.capacidade - aresta.fluxo > 0 &&
@@ -126,20 +125,22 @@ grafo.addNo(0);
 grafo.addNo(1);
 grafo.addNo(2);
 grafo.addNo(3);
-
+grafo.addNo(4);
 // Adiciona as arestas ao grafo
-grafo.addAresta(0, 1, 2);
-grafo.addAresta(0, 2, 4);
-grafo.addAresta(1, 2, 3);
-grafo.addAresta(1, 3, 1);
-grafo.addAresta(2, 3, 5);
+grafo.addAresta(0, 1, 100);
+grafo.addAresta(0, 2, 50);
+grafo.addAresta(1, 2, 50);
+grafo.addAresta(1, 3, 50);
+grafo.addAresta(1, 4, 50);
+grafo.addAresta(2, 3, 100);
+grafo.addAresta(3, 4, 125);
 
 cy.layout({
-  name: "grid",
+  name: "breadthfirst",
 }).run();
 
 const origem = 0;
-const destino = 3;
+const destino = 4;
 
 const fluxoMaximo = grafo.fordFulkerson(origem, destino);
 
