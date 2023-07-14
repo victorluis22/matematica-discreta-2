@@ -62,14 +62,14 @@ class Grafo {
           break;
         case 4:
           this.posicaoDesenhoY = this.yAlto;
+          this.posicaoDesenhoX += 100;
 
           break;
         case 5: // resetando
-        this.posicaoDesenhoX -= 100;
+        this.posicaoDesenhoY = this.yBaixo
         this.contador = 1;
           break;
       }
-      console.log(this.contador);
       this.contador++;
 
       cy.add({
@@ -167,16 +167,18 @@ class Grafo {
 const grafo = new Grafo();
 
 // Adiciona os nós ao grafo
-grafo.addNo(0);
-grafo.addNo(1);
-grafo.addNo(2);
-grafo.addNo(3);
-grafo.addNo(4);
-grafo.addNo(5);
+const numerodeNos = 8;
+for (let i = 0; i <= numerodeNos; i++) {
+  grafo.addNo(i);
+  
+}
 
 // Adiciona as arestas ao grafo
+const numdeArestas= numerodeNos
 grafo.addAresta(0, 1, 100);
 grafo.addAresta(0, 2, 50);
+
+
 grafo.addAresta(1, 2, 50);
 grafo.addAresta(1, 3, 50);
 grafo.addAresta(1, 4, 50);
