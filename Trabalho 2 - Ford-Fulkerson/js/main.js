@@ -22,15 +22,60 @@ class Grafo {
   constructor() {
     this.nos = {};
     this.arestas = [];
+    
+    //Variaveis para determinar onde o nó vai ser desenhado
+    this.posicaoDesenhoX = 100;
+    this.posicaoDesenhoY;
+    this.yBaixo = 200;
+    this.yAlto = 100;
+    this.contador = -1;
   }
 
   addNo(id) {
     if (!this.nos[id]) {
       this.nos[id] = new No(id);
 
+      switch (this.contador) {
+        case -1:
+          this.posicaoDesenhoY = 150;
+
+          break;
+
+        case 0:
+          this.posicaoDesenhoY = this.yAlto;
+          this.posicaoDesenhoX += 100;
+
+          break;
+        case 1:
+          this.posicaoDesenhoY = this.yBaixo;
+
+          break;
+
+        case 2:
+          this.posicaoDesenhoY = this.yBaixo;
+          this.posicaoDesenhoX += 100;
+
+          break;
+        case 3:
+          this.posicaoDesenhoY = this.yAlto;
+
+          break;
+        case 4:
+          this.posicaoDesenhoY = this.yAlto;
+
+          break;
+        case 5: // resetando
+        this.posicaoDesenhoX -= 100;
+        this.contador = 1;
+          break;
+      }
+      console.log(this.contador);
+      this.contador++;
+
       cy.add({
         group: "nodes",
         data: { id: id },
+        position: { x: this.posicaoDesenhoX, y: this.posicaoDesenhoY },
       });
     }
   }
@@ -111,6 +156,7 @@ class Grafo {
 
       // Adiciona o fluxo máximo do caminho aumentante ao fluxo total
       fluxoMaximo += fluxoCaminho;
+      console.log(fluxoMaximo);
     }
 
     return fluxoMaximo;
@@ -126,6 +172,8 @@ grafo.addNo(1);
 grafo.addNo(2);
 grafo.addNo(3);
 grafo.addNo(4);
+grafo.addNo(5);
+
 // Adiciona as arestas ao grafo
 grafo.addAresta(0, 1, 100);
 grafo.addAresta(0, 2, 50);
@@ -134,10 +182,6 @@ grafo.addAresta(1, 3, 50);
 grafo.addAresta(1, 4, 50);
 grafo.addAresta(2, 3, 100);
 grafo.addAresta(3, 4, 125);
-
-cy.layout({
-  name: "breadthfirst",
-}).run();
 
 const origem = 0;
 const destino = 4;

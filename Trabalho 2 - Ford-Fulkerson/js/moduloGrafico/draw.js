@@ -33,16 +33,3 @@ var cy = cytoscape({
  
   });
 
-/*
-cy.add({
-    group: 'edges',
-    data: { id: 'e0', source: '0', target: '1' } 
-
-});
-
-cy.add({
-    group: 'edges',
-    data: { id: 'e1', source: '0', target: '2' } 
-
-});*/
-
