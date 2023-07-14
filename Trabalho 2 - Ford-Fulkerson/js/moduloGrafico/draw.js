@@ -8,7 +8,9 @@ var cy = cytoscape({
       {
         selector: 'node',
         style: {
-          'background-color': '#3771c8',
+          'background-color': 'white',
+          'border-width': '3px',     // Set the width of the border
+          'border-color': 'black',
           'label': 'data(id)'
         }
       },

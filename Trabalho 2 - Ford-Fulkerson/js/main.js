@@ -22,7 +22,7 @@ class Grafo {
   constructor() {
     this.nos = {};
     this.arestas = [];
-    
+
     //Variaveis para determinar onde o nó vai ser desenhado
     this.posicaoDesenhoX = 100;
     this.posicaoDesenhoY;
@@ -34,6 +34,8 @@ class Grafo {
   addNo(id) {
     if (!this.nos[id]) {
       this.nos[id] = new No(id);
+
+      //#region  estrutra para gerar o grid padrão/ visualizacao do grafo
 
       switch (this.contador) {
         case -1:
@@ -66,8 +68,8 @@ class Grafo {
 
           break;
         case 5: // resetando
-        this.posicaoDesenhoY = this.yBaixo
-        this.contador = 1;
+          this.posicaoDesenhoY = this.yBaixo;
+          this.contador = 1;
           break;
       }
       this.contador++;
@@ -87,7 +89,7 @@ class Grafo {
     cy.add({
       group: "edges",
       data: {
-        id: "e + " + origem + "" + destino,
+        id: "0" + (this.arestas.length - 1),
         source: origem,
         target: destino,
         weight: capacidade,
@@ -130,7 +132,27 @@ class Grafo {
     // Não há mais caminhos aumentantes
     return false;
   }
+  drawfluxoArestra() {
+    cy.edges().forEach((edge) => {
+      var id = parseInt(edge.id());
+      var aresta = this.arestas[id];
+      var flow = aresta.capacidade - aresta.fluxo;
+      var color;
+      if (flow < 41 ) {
+        color = "#ca3c32";
+      } else if (flow > 41 && flow < 83) {
+        color = "#fbb930";
+      } else {
+        color = "#347346";
+      }
 
+      edge.style({
+        width: 3, // Altera a largura da aresta
+        "line-color": color, // Altera a cor da linha da aresta
+        "target-arrow-color": "red", // Altera a cor da seta de destino da aresta
+      });
+    });
+  }
   // Executa o algoritmo de Ford-Fulkerson para encontrar o fluxo máximo no grafo
   fordFulkerson(origem, destino) {
     let fluxoMaximo = 0;
@@ -157,8 +179,8 @@ class Grafo {
       // Adiciona o fluxo máximo do caminho aumentante ao fluxo total
       fluxoMaximo += fluxoCaminho;
       console.log(fluxoMaximo);
+      this.drawfluxoArestra();
     }
-
     return fluxoMaximo;
   }
 }
@@ -167,17 +189,15 @@ class Grafo {
 const grafo = new Grafo();
 
 // Adiciona os nós ao grafo
-const numerodeNos = 8;
+const numerodeNos = 4;
 for (let i = 0; i <= numerodeNos; i++) {
   grafo.addNo(i);
-  
 }
 
 // Adiciona as arestas ao grafo
-const numdeArestas= numerodeNos
+const numdeArestas = numerodeNos;
 grafo.addAresta(0, 1, 100);
 grafo.addAresta(0, 2, 50);
-
 
 grafo.addAresta(1, 2, 50);
 grafo.addAresta(1, 3, 50);
@@ -188,6 +208,8 @@ grafo.addAresta(3, 4, 125);
 const origem = 0;
 const destino = 4;
 
+cy.zoom(2.5);
+cy.center();
 const fluxoMaximo = grafo.fordFulkerson(origem, destino);
 
 console.log("Fluxo máximo encontrado:", fluxoMaximo);
