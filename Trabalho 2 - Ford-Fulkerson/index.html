@@ -6,137 +6,42 @@
       <meta name="viewport"
             content="width=device-width, initial-scale=1.0">
       <title>Ford-Fulkerson</title>
-
-      <!-- <link rel="stylesheet"
-            type="text/css"
-            href="https://gitcdn.xyz/repo/pi0/clippyjs/master/assets/clippy.css"> -->
-
-      <style>
-            #cy {
-                  width: 74%;
-                  height: 100%;
-                  position: absolute;
-                  top: 0px;
-                  right: 0px;
-            }
-
-            .side-bar {
-                  width: 25%;
-                  height: 100%;
-                  position: fixed;
-                  background-color: #242527;
-
-                  z-index: 99;
-                  padding: 20px;
-                  left: 0px;
-                  top: 0px;
-                  color: white;
-                  font-family: "Montserrat", sans-serif;
-            }
-
-            .switch {
-                  position: relative;
-                  display: inline-block;
-                  width: 60px;
-                  height: 34px;
-            }
-
-            /* Hide default HTML checkbox */
-            .switch input {
-                  opacity: 0;
-                  width: 0;
-                  height: 0;
-            }
-
-            /* The slider */
-            .slider {
-                  position: absolute;
-                  cursor: pointer;
-                  top: 0;
-                  left: 0;
-                  right: 0;
-                  bottom: 0;
-                  background-color: #ccc;
-                  -webkit-transition: .4s;
-                  transition: .4s;
-                  border-radius: 34px;
-            }
-
-            .slider:before {
-                  position: absolute;
-                  content: "";
-                  border-radius: 34px;
-                  height: 26px;
-                  width: 26px;
-                  left: 4px;
-                  bottom: 4px;
-                  background-color: white;
-                  -webkit-transition: .4s;
-                  transition: .4s;
-            }
-
-            input:checked+.slider {
-                  background-color: #0966c1;
-            }
-
-            input:focus+.slider {
-                  box-shadow: 0 0 1px #0966c1;
-            }
-
-            input:checked+.slider:before {
-                  -webkit-transform: translateX(26px);
-                  -ms-transform: translateX(26px);
-                  transform: translateX(26px);
-            }
-
-            .result {
-                  background-color: #0966c1;
-                  border: none;
-                  color: white;
-                  font-weight: bold;
-                  padding: 32px 20px;
-                  font-size: 16px;
-                  position: fixed;
-                  bottom: 0;
-                  left: 0;
-                  width: 25%;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-            }
-      </style>
+      <link rel="stylesheet"
+            href="css/main.css">
 
 </head>
 
 <body>
-      <div id="cy">
-      </div>
 
+      <!--Div onde sera renderizado o grafico-->
+      <div id="cy"></div>
+
+      <!--Div lateral de controle-->
       <div class="side-bar">
 
             <h1>Fluxo Maximo usando Algoritmo de Ford-Fulkerson</h1>
             <br>
 
             <h2>Selecione o número de vértices</h2>
-            <input type="number" value="20" min="2" id="numeroNo" onchange="renderGrafo()">
+            <input type="number"
+                   value="20"
+                   min="2"
+                   id="numeroNo"
+                   onchange="renderGrafo()">
 
             <h2>Selecione um grafo</h2>
-            <select onchange="renderExemploGrafo()" id="selectGrafo">
+            <select onchange="renderExemploGrafo()"
+                    id="selectGrafo">
                   <option value="0">Nenhum exemplo selecionado</option>
                   <option value="1">Exemplo 1</option>
                   <option value="2">Exemplo 2</option>
                   <option value="3">Mapa de Nova friburgo</option>
             </select>
             <br>
-            <!-- <h2>Animação</h2>
-            <label class="switch">
-                  <input type="checkbox">
-                  <span class="slider"></span>
-            </label>
-            <br> -->
             <div class="result">Fluxo Máximo: <span id="maxFluxo">0</span></div>
       </div>
 
+      <!--Primeiro e segundo arquivo referente a biblioteca usada, terceiro é o principal-->
       <script src="js/moduloGrafico/cytoscape.min.js"></script>
       <script src="js/moduloGrafico/draw.js"></script>
       <script src="js/main.js"></script>
