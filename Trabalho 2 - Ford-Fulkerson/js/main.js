@@ -137,8 +137,9 @@ class Grafo {
       var id = parseInt(edge.id());
       var aresta = this.arestas[id];
       var flow = aresta.capacidade - aresta.fluxo;
+      var textoFlow = aresta.fluxo + "/"  +aresta.capacidade;
       var color;
-      if (flow < 41 ) {
+      if (flow <= 41) {
         color = "#ca3c32";
       } else if (flow > 41 && flow < 83) {
         color = "#fbb930";
@@ -149,7 +150,8 @@ class Grafo {
       edge.style({
         width: 3, // Altera a largura da aresta
         "line-color": color, // Altera a cor da linha da aresta
-        "target-arrow-color": "red", // Altera a cor da seta de destino da aresta
+        "target-arrow-color": color, // Altera a cor da seta de destino da aresta
+      "label": textoFlow
       });
     });
   }
@@ -188,25 +190,47 @@ class Grafo {
 // Exemplo de uso
 const grafo = new Grafo();
 
-// Adiciona os nós ao grafo
-const numerodeNos = 4;
+// Adiciona os nós ao grafo dinamicamente
+const numerodeNos = 20;
 for (let i = 0; i <= numerodeNos; i++) {
   grafo.addNo(i);
 }
 
 // Adiciona as arestas ao grafo
 const numdeArestas = numerodeNos;
+var i = 1;
+//arestas da ponta
 grafo.addAresta(0, 1, 100);
 grafo.addAresta(0, 2, 50);
 
-grafo.addAresta(1, 2, 50);
+//interação para gerar todas arestas restante do grafo
+while (i < numerodeNos) {
+
+
+  grafo.addAresta(i, i + 1, 50); // Gera um número aleatório entre 0 e 150);
+  if (i % 4 == 0) {
+    grafo.addAresta(i - 3, i, 50);
+    grafo.addAresta(i - 3, i - 1, 50);
+
+    console.log(i - 3);
+    console.log(i - 1);
+  }
+  if(i==3){ // desenhar linha de baixo
+    for (let j = 3; j < numdeArestas-4; j+=4) {
+      grafo.addAresta(j , j+3, 50);
+    }
+  }
+  i++;
+}
+/*grafo.addAresta(1, 2, 50);
 grafo.addAresta(1, 3, 50);
 grafo.addAresta(1, 4, 50);
 grafo.addAresta(2, 3, 100);
-grafo.addAresta(3, 4, 125);
+grafo.addAresta(3, 4, 125);*/
 
 const origem = 0;
-const destino = 4;
+const destino = 20;
+
 
 cy.zoom(2.5);
 cy.center();
