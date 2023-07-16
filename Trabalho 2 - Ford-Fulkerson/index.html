@@ -7,9 +7,9 @@
             content="width=device-width, initial-scale=1.0">
       <title>Ford-Fulkerson</title>
 
-      <link rel="stylesheet"
+      <!-- <link rel="stylesheet"
             type="text/css"
-            href="https://gitcdn.xyz/repo/pi0/clippyjs/master/assets/clippy.css">
+            href="https://gitcdn.xyz/repo/pi0/clippyjs/master/assets/clippy.css"> -->
 
       <style>
             #cy {
@@ -89,48 +89,52 @@
                   transform: translateX(26px);
             }
 
-            button {
+            .result {
                   background-color: #0966c1;
                   border: none;
                   color: white;
-                  padding: 32px;
+                  font-weight: bold;
+                  padding: 32px 20px;
                   font-size: 16px;
                   position: fixed;
                   bottom: 0;
                   left: 0;
-                  width: calc(25% + 40px);
-                  
-            }
-            button:hover{
-                  background-color: #1584f3;
+                  width: 25%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
             }
       </style>
 
 </head>
 
 <body>
-
       <div id="cy">
       </div>
 
       <div class="side-bar">
 
-            <h1>Fluxo Maximo usando Algoritimo de Ford-Fulkerson</h1>
+            <h1>Fluxo Maximo usando Algoritmo de Ford-Fulkerson</h1>
             <br>
+
+            <h2>Selecione o número de vértices</h2>
+            <input type="number" value="20" min="2" id="numeroNo" onchange="renderGrafo()">
+
             <h2>Selecione um grafo</h2>
-            <select>
-                  <option>Exemplo 1</option>
-                  <option>Exemplo 2</option>
-                  <option>Mapa de Nova friburgo</option>
+            <select onchange="renderExemploGrafo()" id="selectGrafo">
+                  <option value="0">Nenhum exemplo selecionado</option>
+                  <option value="1">Exemplo 1</option>
+                  <option value="2">Exemplo 2</option>
+                  <option value="3">Mapa de Nova friburgo</option>
             </select>
             <br>
-            <h2>Animação</h2>
+            <!-- <h2>Animação</h2>
             <label class="switch">
                   <input type="checkbox">
                   <span class="slider"></span>
             </label>
-            <br>
-            <button>Gerar!!!</button>
+            <br> -->
+            <div class="result">Fluxo Máximo: <span id="maxFluxo">0</span></div>
       </div>
 
       <script src="js/moduloGrafico/cytoscape.min.js"></script>

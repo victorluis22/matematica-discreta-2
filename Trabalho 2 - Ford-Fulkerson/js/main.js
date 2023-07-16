@@ -132,6 +132,7 @@ class Grafo {
     // Não há mais caminhos aumentantes
     return false;
   }
+
   drawfluxoArestra() {
     cy.edges().forEach((edge) => {
       var id = parseInt(edge.id());
@@ -187,53 +188,69 @@ class Grafo {
   }
 }
 
-// Exemplo de uso
-const grafo = new Grafo();
+function renderGrafo () {
+  // Reseta os elementos do cytoscape
+  cy.elements().remove()
+  const grafo = new Grafo();
+  const numerodeNos = parseInt(document.getElementById("numeroNo").value)
 
-// Adiciona os nós ao grafo dinamicamente
-const numerodeNos = 20;
-for (let i = 0; i <= numerodeNos; i++) {
-  grafo.addNo(i);
-}
-
-// Adiciona as arestas ao grafo
-const numdeArestas = numerodeNos;
-var i = 1;
-//arestas da ponta
-grafo.addAresta(0, 1, 100);
-grafo.addAresta(0, 2, 50);
-
-//interação para gerar todas arestas restante do grafo
-while (i < numerodeNos) {
-
-
-  grafo.addAresta(i, i + 1, 50); // Gera um número aleatório entre 0 e 150);
-  if (i % 4 == 0) {
-    grafo.addAresta(i - 3, i, 50);
-    grafo.addAresta(i - 3, i - 1, 50);
-
-    console.log(i - 3);
-    console.log(i - 1);
+  // Adiciona os nós ao grafo dinamicamente
+  for (let i = 0; i <= numerodeNos; i++) {
+    grafo.addNo(i);
   }
-  if(i==3){ // desenhar linha de baixo
-    for (let j = 3; j < numdeArestas-4; j+=4) {
-      grafo.addAresta(j , j+3, 50);
+
+  // Adiciona as arestas ao grafo
+  const numdeArestas = numerodeNos;
+  var i = 1;
+  //arestas da ponta
+  grafo.addAresta(0, 1, 100);
+  grafo.addAresta(0, 2, 50);
+
+  //interação para gerar todas arestas restante do grafo
+  while (i < numerodeNos) {
+    grafo.addAresta(i, i + 1, 50); // Gera um número aleatório entre 0 e 150);
+    if (i % 4 == 0) {
+      grafo.addAresta(i - 3, i, 50);
+      grafo.addAresta(i - 3, i - 1, 50);
+
+      console.log(i - 3);
+      console.log(i - 1);
     }
+    if(i==3){ // desenhar linha de baixo
+      for (let j = 3; j < numdeArestas-4; j+=4) {
+        grafo.addAresta(j , j+3, 50);
+      }
+    }
+    i++;
   }
-  i++;
+
+  const origem = 0;
+  const destino = numerodeNos;
+
+  cy.zoom(0.8);
+  cy.center();
+  const fluxoMaximo = grafo.fordFulkerson(origem, destino);
+
+  document.getElementById("maxFluxo").innerHTML = fluxoMaximo
+  console.log("Fluxo máximo encontrado:", fluxoMaximo);
 }
-/*grafo.addAresta(1, 2, 50);
-grafo.addAresta(1, 3, 50);
-grafo.addAresta(1, 4, 50);
-grafo.addAresta(2, 3, 100);
-grafo.addAresta(3, 4, 125);*/
 
-const origem = 0;
-const destino = 20;
+// Renderiza um gráfico com 20 nós no começo do programa
+renderGrafo()
 
-
-cy.zoom(2.5);
-cy.center();
-const fluxoMaximo = grafo.fordFulkerson(origem, destino);
-
-console.log("Fluxo máximo encontrado:", fluxoMaximo);
+function renderExemploGrafo () {
+  const numeroExemplo = document.getElementById("selectGrafo").value
+  switch (numeroExemplo){
+    case '1':
+      alert(1)
+      break
+    case '2':
+      alert(2)
+      break
+    case '3':
+      alert(3)
+      break
+    default:
+      break
+  }
+}
