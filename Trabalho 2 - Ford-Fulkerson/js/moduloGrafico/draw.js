@@ -12,12 +12,6 @@ var cy = cytoscape({
           'label': 'data(id)'
         }
       }
-    ],
-    layout: {
-        name: 'grid',
-        rows: 1
-      },
-    
- 
+    ]
   });
 

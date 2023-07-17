@@ -242,56 +242,47 @@ function renderGrafo(origem = 0, destino = 0) {
 }
 
 // Renderiza um gráfico com 20 nós no começo do programa
-renderGrafo();
+renderGrafoExemploRJ();
 
-function renderGrafoExemplo2() {
+function renderGrafoExemploRJ() {
   cy.elements().remove();
   const grafo = new Grafo();
   document.getElementById("numeroNo").disabled = true;
 
-  grafo.addNo(0);
-  grafo.addNo(1);
-  grafo.addNo(2);
-  grafo.addNo(3);
-  grafo.addNo(4);
+  grafo.addNo(0,185,460);
+  grafo.addNo(1,275,350);
+  grafo.addNo(2,375,450);
+  grafo.addNo(3,385,350);
+  grafo.addNo(4,520,420);
+  grafo.addNo(5,560,300);
+  grafo.addNo(6,620,400);
+  grafo.addNo(7,670,135);
+  grafo.addNo(8,760,240);
 
-  grafo.addAresta(0, 1, 100);
-  grafo.addAresta(0, 2, 50);
-  grafo.addAresta(1, 2, 50);
-  grafo.addAresta(1, 3, 50);
-  grafo.addAresta(1, 4, 50);
-  grafo.addAresta(2, 3, 100);
-  grafo.addAresta(3, 4, 125);
+grafo.addAresta(0,1,50);
+grafo.addAresta(0,2,90);
+grafo.addAresta(1,3,50);
+grafo.addAresta(2,3,50);
+grafo.addAresta(1,2,60);
 
-  const origem = 0;
-  const destino = 4;
+grafo.addAresta(2,4,80);
+grafo.addAresta(2,6,50);
+grafo.addAresta(2,5,70);
 
-  const fluxoMaximo = grafo.fordFulkerson(origem, destino);
+grafo.addAresta(3,5,50);
+grafo.addAresta(5,7,50);
+grafo.addAresta(5,4,50);
+grafo.addAresta(5,8,70);
 
-  document.getElementById("maxFluxo").innerHTML = fluxoMaximo;
-  console.log("Fluxo máximo encontrado:", fluxoMaximo);
-}
-function renderGrafoExemplo3() {
-  cy.elements().remove();
-  const grafo = new Grafo();
-  document.getElementById("numeroNo").disabled = true;
+grafo.addAresta(6,8,50);
+grafo.addAresta(7,8,50);
 
-  grafo.addNo(0);
-  grafo.addNo(1);
-  grafo.addNo(2);
-  grafo.addNo(3);
-  grafo.addNo(4);
 
-  grafo.addAresta(0, 1, 100);
-  grafo.addAresta(0, 2, 50);
-  grafo.addAresta(1, 2, 50);
-  grafo.addAresta(1, 3, 50);
-  grafo.addAresta(1, 4, 50);
-  grafo.addAresta(2, 3, 100);
-  grafo.addAresta(3, 4, 125);
+
+
 
   const origem = 0;
-  const destino = 4;
+  const destino = 8;
 
   const fluxoMaximo = grafo.fordFulkerson(origem, destino);
 
@@ -305,24 +296,20 @@ function renderExemploGrafo() {
 
   switch (numeroExemplo) {
     case "1":
-      renderGrafo();
+      renderGrafoExemploRJ();
 
       break;
     case "2":
-      renderGrafoExemplo2();
-      break;
-    case "3":
-      alert(3);
-      break;
-    default:
+      renderGrafo();
+
       break;
   }
   cy.zoom(0.8);
   cy.center();
 }
 
-cy.on("click", "node", function (event) {
-  const nodeId = event.target.id();
+cy.on('click', 'node', function(event) {
+  const nodeId = event.target.position();
   // Perform some action when a node is clicked
-  console.log("Node clicked:", nodeId);
+  alert(nodeId.x + "|" + nodeId.y);
 });
