@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+      <meta charset="utf-8">
+      <meta name="viewport"
+            content="width=device-width, initial-scale=1.0">
+      <title>Ford-Fulkerson</title>
+      <link rel="stylesheet"
+            href="css/main.css">
+            <link rel="icon" href="/css/icone.png">
+
+</head>
+
+<body>
+      <!--Div onde sera renderizado o grafico-->
+      <div id="cy"></div>
+
+      <!--Div lateral de controle-->
+      <div class="side-bar">
+
+            <h1>Fluxo Maximo usando Algoritmo de Ford-Fulkerson</h1>
+            <br>
+            <div class="card">
+                  <h2>Selecione um grafo</h2>
+                  <select onchange="renderExemploGrafo()"
+                          id="selectGrafo">
+                          <option value="1">Exemplo 1 - Mapa do Rio de janeiro</option>
+                        <option value="2">Exemplo 2 - Geração com N nós</option>
+                  </select>
+            </div>
+            <br>
+            <div class="card">
+                  <h2>Selecione o número de vértices</h2>
+                  <input type="number"
+                         value="20"
+                         min="2"
+                         id="numeroNo"
+                         onchange="renderGrafo()">
+            </div>
+            <div class="result">Fluxo Máximo: <span id="maxFluxo">0</span></div>
+      </div>
+
+      <!--Primeiro e segundo arquivo referente a biblioteca usada, terceiro é o principal-->
+      <script src="js/moduloGrafico/cytoscape.min.js"></script>
+      <script src="js/moduloGrafico/draw.js"></script>
+      <script src="js/main.js"></script>
+</body>
+
+</html
