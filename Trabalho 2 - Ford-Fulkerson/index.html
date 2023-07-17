@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
       <!--Div onde sera renderizado o grafico-->
       <div id="cy"></div>
 
@@ -21,23 +20,24 @@
 
             <h1>Fluxo Maximo usando Algoritmo de Ford-Fulkerson</h1>
             <br>
-
-            <h2>Selecione o número de vértices</h2>
-            <input type="number"
-                   value="20"
-                   min="2"
-                   id="numeroNo"
-                   onchange="renderGrafo()">
-
-            <h2>Selecione um grafo</h2>
-            <select onchange="renderExemploGrafo()"
-                    id="selectGrafo">
-                  <option value="0">Nenhum exemplo selecionado</option>
-                  <option value="1">Exemplo 1</option>
-                  <option value="2">Exemplo 2</option>
-                  <option value="3">Mapa de Nova friburgo</option>
-            </select>
+            <div class="card">
+                  <h2>Selecione um grafo</h2>
+                  <select onchange="renderExemploGrafo()"
+                          id="selectGrafo">
+                        <option value="1">Exemplo 1</option>
+                        <option value="2">Exemplo 2</option>
+                        <option value="3">Mapa de Nova friburgo</option>
+                  </select>
+            </div>
             <br>
+            <div class="card">
+                  <h2>Selecione o número de vértices</h2>
+                  <input type="number"
+                         value="20"
+                         min="2"
+                         id="numeroNo"
+                         onchange="renderGrafo()">
+            </div>
             <div class="result">Fluxo Máximo: <span id="maxFluxo">0</span></div>
       </div>
 

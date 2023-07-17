@@ -1,3 +1,11 @@
+.card {
+  background-color: #35363d;
+  border-radius: 10px;
+  padding: 10px;
+}
+h2 {
+  margin-top: 0px;
+}
 #cy {
   width: 74%;
   height: 100%;
@@ -59,14 +67,6 @@
   background-color: white;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-}
-
-input:checked + .slider {
-  background-color: #0966c1;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #0966c1;
 }
 
 input:checked + .slider:before {

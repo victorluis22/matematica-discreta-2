@@ -93,7 +93,7 @@ class Grafo {
         source: origem,
         target: destino,
         weight: capacidade,
-      },
+      }
     });
   }
 
@@ -133,28 +133,26 @@ class Grafo {
     // Não há mais caminhos aumentantes
     return false;
   }
-//Muda a cor das arestas. Vermelho para fluxo alto, amarelo intermediario e verde pouco 
+  //Muda a cor das arestas. Vermelho para fluxo alto, amarelo intermediario e verde pouco
   drawfluxoArestra() {
     //Roda cada aresta e calcula o fluxo, mudando a cor depois
     cy.edges().forEach((edge) => {
       var id = parseInt(edge.id());
       var aresta = this.arestas[id];
-      var flow = aresta.capacidade - aresta.fluxo;
+      var flow = aresta.fluxo / aresta.capacidade;
       var textoFlow = aresta.fluxo + "/" + aresta.capacidade;
       var color;
-      if (flow <= 41) {
-        color = "#ca3c32";
-      } else if (flow > 41 && flow < 83) {
+      if (flow <= 0.3) {
+        color = "#347346";
+      } else if (flow > 0.3 && flow < 0.6) {
         color = "#fbb930";
       } else {
-        color = "#347346";
+        color = "#ca3c32";
       }
-
       edge.style({
-        width: 3, // Altera a largura da aresta
         "line-color": color, // Altera a cor da linha da aresta
-        "target-arrow-color": color, // Altera a cor da seta de destino da aresta
         label: textoFlow,
+ 
       });
     });
   }
@@ -184,6 +182,8 @@ class Grafo {
       // Adiciona o fluxo máximo do caminho aumentante ao fluxo total
       fluxoMaximo += fluxoCaminho;
       console.log(fluxoMaximo);
+      document.getElementById("maxFluxo").innerHTML = fluxoMaximo;
+
       this.drawfluxoArestra();
     }
     return fluxoMaximo;
@@ -206,11 +206,11 @@ function renderGrafo() {
   var i = 1;
   //arestas da ponta
   grafo.addAresta(0, 1, 100);
-  grafo.addAresta(0, 2, 50);
+  grafo.addAresta(0, 2, 50);  
 
   //Interação para gerar todas arestas restante do grafo
   while (i < numerodeNos) {
-    grafo.addAresta(i, i + 1, 50);
+    grafo.addAresta(i, i + 1, Math.floor(Math.random() * 100));
     if (i % 4 == 0) {
       grafo.addAresta(i - 3, i, 50);
       grafo.addAresta(i - 3, i - 1, 50);
@@ -230,10 +230,8 @@ function renderGrafo() {
   const origem = 0;
   const destino = numerodeNos;
 
-  //Focalizando grafo 
-  cy.zoom(0.8);
-  cy.center();
-  
+  //Focalizando grafo
+
   const fluxoMaximo = grafo.fordFulkerson(origem, destino);
 
   document.getElementById("maxFluxo").innerHTML = fluxoMaximo;
@@ -243,14 +241,23 @@ function renderGrafo() {
 // Renderiza um gráfico com 20 nós no começo do programa
 renderGrafo();
 
+function renderGrafoExemplo2() {
+  cy.elements().remove();
+  const grafo = new Grafo();
+  document.getElementById("numeroNo").disabled = true;
+}
+
 function renderExemploGrafo() {
   const numeroExemplo = document.getElementById("selectGrafo").value;
+  document.getElementById("numeroNo").disabled = false;
+
   switch (numeroExemplo) {
     case "1":
-      alert(1);
+      renderGrafo();
+
       break;
     case "2":
-      alert(2);
+      renderGrafoExemplo2();
       break;
     case "3":
       alert(3);
@@ -258,4 +265,6 @@ function renderExemploGrafo() {
     default:
       break;
   }
+  cy.zoom(0.8);
+  cy.center();
 }
