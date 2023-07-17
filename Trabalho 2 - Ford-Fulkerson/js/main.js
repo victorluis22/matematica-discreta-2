@@ -31,48 +31,52 @@ class Grafo {
     this.contador = -1;
   }
 
-  addNo(id) {
+  addNo(id, posicaoX = 0, posicaoY = 0) {
     if (!this.nos[id]) {
       this.nos[id] = new No(id);
 
       //Estrutra para gerar o grid padrão/ visualizacao do grafo
+      if ((posicaoX, posicaoY == 0)) {
+        switch (this.contador) {
+          case -1:
+            this.posicaoDesenhoY = 150;
 
-      switch (this.contador) {
-        case -1:
-          this.posicaoDesenhoY = 150;
+            break;
 
-          break;
+          case 0:
+            this.posicaoDesenhoY = this.yAlto;
+            this.posicaoDesenhoX += 100;
 
-        case 0:
-          this.posicaoDesenhoY = this.yAlto;
-          this.posicaoDesenhoX += 100;
+            break;
+          case 1:
+            this.posicaoDesenhoY = this.yBaixo;
 
-          break;
-        case 1:
-          this.posicaoDesenhoY = this.yBaixo;
+            break;
 
-          break;
+          case 2:
+            this.posicaoDesenhoY = this.yBaixo;
+            this.posicaoDesenhoX += 100;
 
-        case 2:
-          this.posicaoDesenhoY = this.yBaixo;
-          this.posicaoDesenhoX += 100;
+            break;
+          case 3:
+            this.posicaoDesenhoY = this.yAlto;
 
-          break;
-        case 3:
-          this.posicaoDesenhoY = this.yAlto;
+            break;
+          case 4:
+            this.posicaoDesenhoY = this.yAlto;
+            this.posicaoDesenhoX += 100;
 
-          break;
-        case 4:
-          this.posicaoDesenhoY = this.yAlto;
-          this.posicaoDesenhoX += 100;
-
-          break;
-        case 5: // resetando varivel neste caso
-          this.posicaoDesenhoY = this.yBaixo;
-          this.contador = 1;
-          break;
+            break;
+          case 5: // resetando varivel neste caso
+            this.posicaoDesenhoY = this.yBaixo;
+            this.contador = 1;
+            break;
+        }
+        this.contador++;
+      }else{
+        this.posicaoDesenhoX = posicaoX;
+        this.posicaoDesenhoY = posicaoY;
       }
-      this.contador++;
 
       cy.add({
         group: "nodes",
@@ -93,7 +97,7 @@ class Grafo {
         source: origem,
         target: destino,
         weight: capacidade,
-      }
+      },
     });
   }
 
@@ -152,7 +156,6 @@ class Grafo {
       edge.style({
         "line-color": color, // Altera a cor da linha da aresta
         label: textoFlow,
- 
       });
     });
   }
@@ -190,11 +193,11 @@ class Grafo {
   }
 }
 
-function renderGrafo() {
+function renderGrafo(origem = 0, destino = 0) {
   // Reseta os elementos do cytoscape
   cy.elements().remove();
   const grafo = new Grafo();
-  const numerodeNos = parseInt(document.getElementById("numeroNo").value);
+  numerodeNos = parseInt(document.getElementById("numeroNo").value);
 
   // Adiciona os nós ao grafo dinamicamente
   for (let i = 0; i <= numerodeNos; i++) {
@@ -206,7 +209,7 @@ function renderGrafo() {
   var i = 1;
   //arestas da ponta
   grafo.addAresta(0, 1, 100);
-  grafo.addAresta(0, 2, 50);  
+  grafo.addAresta(0, 2, 50);
 
   //Interação para gerar todas arestas restante do grafo
   while (i < numerodeNos) {
@@ -226,9 +229,9 @@ function renderGrafo() {
     }
     i++;
   }
-
-  const origem = 0;
-  const destino = numerodeNos;
+  if (destino == 0) {
+    destino = numerodeNos;
+  }
 
   //Focalizando grafo
 
@@ -245,6 +248,55 @@ function renderGrafoExemplo2() {
   cy.elements().remove();
   const grafo = new Grafo();
   document.getElementById("numeroNo").disabled = true;
+
+  grafo.addNo(0);
+  grafo.addNo(1);
+  grafo.addNo(2);
+  grafo.addNo(3);
+  grafo.addNo(4);
+
+  grafo.addAresta(0, 1, 100);
+  grafo.addAresta(0, 2, 50);
+  grafo.addAresta(1, 2, 50);
+  grafo.addAresta(1, 3, 50);
+  grafo.addAresta(1, 4, 50);
+  grafo.addAresta(2, 3, 100);
+  grafo.addAresta(3, 4, 125);
+
+  const origem = 0;
+  const destino = 4;
+
+  const fluxoMaximo = grafo.fordFulkerson(origem, destino);
+
+  document.getElementById("maxFluxo").innerHTML = fluxoMaximo;
+  console.log("Fluxo máximo encontrado:", fluxoMaximo);
+}
+function renderGrafoExemplo3() {
+  cy.elements().remove();
+  const grafo = new Grafo();
+  document.getElementById("numeroNo").disabled = true;
+
+  grafo.addNo(0);
+  grafo.addNo(1);
+  grafo.addNo(2);
+  grafo.addNo(3);
+  grafo.addNo(4);
+
+  grafo.addAresta(0, 1, 100);
+  grafo.addAresta(0, 2, 50);
+  grafo.addAresta(1, 2, 50);
+  grafo.addAresta(1, 3, 50);
+  grafo.addAresta(1, 4, 50);
+  grafo.addAresta(2, 3, 100);
+  grafo.addAresta(3, 4, 125);
+
+  const origem = 0;
+  const destino = 4;
+
+  const fluxoMaximo = grafo.fordFulkerson(origem, destino);
+
+  document.getElementById("maxFluxo").innerHTML = fluxoMaximo;
+  console.log("Fluxo máximo encontrado:", fluxoMaximo);
 }
 
 function renderExemploGrafo() {
@@ -268,3 +320,9 @@ function renderExemploGrafo() {
   cy.zoom(0.8);
   cy.center();
 }
+
+cy.on("click", "node", function (event) {
+  const nodeId = event.target.id();
+  // Perform some action when a node is clicked
+  console.log("Node clicked:", nodeId);
+});
